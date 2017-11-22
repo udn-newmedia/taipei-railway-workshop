@@ -5,16 +5,6 @@ import App from './App'
 import 'lazysizes'
 import AFRAME from 'aframe'
 
-AFRAME.registerComponent('log', {
-  schema: {
-    event: {type: 'string', default: ''},
-    message: {type: 'string', default: 'Hello, World'}
-  },
-  init: function(){
-    console.log(this.data.message)
-  }
-})
-
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
