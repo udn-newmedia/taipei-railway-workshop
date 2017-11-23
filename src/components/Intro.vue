@@ -1,12 +1,12 @@
 <template>
-  <div class="container content intro">
+  <div class="container content intro" :class="{min: min}">
       <p>{{text}}</p>
   </div>
 </template>
 
 <script>
 export default {
-  props: ['text']
+  props: ['text', 'min'],
 }
 </script>
 
@@ -31,13 +31,26 @@ export default {
         color: gray;
         margin-top: 5px;
     }
+    .content.intro{
+      padding: 70px 20px 30px 20px;
+    }
     .intro{
-        position: absolute;
-        top: 0;
-        left: 0;
-        background-color: rgba(0, 0, 0, 0.8);
-        transition: opacity 0.7s ease;
-        z-index: 10;
+      position: absolute;
+      top: 0;
+      left: 0;
+      background-color: rgba(0, 0, 0, 0.8);
+      transition: all 0.7s ease;
+      width: 100%;
+      z-index: 10;
+      transform-origin: top left;
+    }
+    .intro.min{
+      top: 64px;
+      left: 20px;
+      transform: scale(0);
+    }
+    .min p{
+        display: none;
     }
     @media screen and (max-width: 767px){
         h2{
