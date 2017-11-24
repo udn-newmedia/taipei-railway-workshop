@@ -50,8 +50,6 @@
     <a-scene @touchstart="touchHandle">
       <a-assets>
         <img id="360-1-1" src="./assets/360-1-1.jpg"/>
-        <img id="360-1-2" src="./assets/360-1-2.jpg"/>
-        <img id="360-1-3" src="./assets/360-1-3.jpg"/>
         <img id="360-2" src="./assets/360-2.jpg"/>
         <img id="360-3" src="./assets/360-3.jpg"/>
         <img id="button-1" src="./assets/button_1.png">
@@ -159,9 +157,7 @@ export default {
     }
   },
   mounted: function(){
-    setInterval(() => {
-      // this.skySrc1 = this.skySrc1.slice(0, -1) + ( (Number(this.skySrc1[this.skySrc1.length-1]) + 1)%3 + 1)
-    }, 3000)
+    
   },
   methods: {
     stateChange: function(){
@@ -258,6 +254,7 @@ export default {
   #comment-block{
     height: 100%;
     overflow: scroll;
+    -webkit-overflow-scrolling: touch;
   }
 
   #cover{
