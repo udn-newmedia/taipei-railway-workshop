@@ -101,7 +101,7 @@
       </a-image>
       <a-entity id="camera-rotation" rotation="0 80 0">
         <a-camera look-controls mouse-cursor>
-            <a-cursor id="cursor" fuse="false" geometry="primitive: ring; radiusInner: 0.03; radiusOuter: 0.04" material="color: red">
+            <a-cursor id="cursor" geometry="primitive: ring; radiusInner: 0.03; radiusOuter: 0.04" material="color: red">
               <a-animation begin="click" easing="ease-in" attribute="scale"
                            fill="backwards" from="0.1 0.1 0.1" to="1 1 1" dur="150"></a-animation>
               <a-animation begin="cursor-fusing" easing="ease-in" attribute="scale"
