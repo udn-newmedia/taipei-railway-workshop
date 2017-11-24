@@ -21,14 +21,13 @@ export default {
         background-repeat: no-repeat;
         background-size: cover;
         overflow: hidden;
-    }
-    #bg-contain{
+        position: absolute;
+        z-index: 10;
+        width: 100%;
         top: 0;
         left: 0;
-        width: 100%;
-        height: 100vh;
-        z-index: -1;
-        position: absolute;
+    }
+    #bg-contain{
         transition: opacity 0.7s ease;
         overflow: hidden;
     }

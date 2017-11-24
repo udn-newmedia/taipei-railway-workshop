@@ -35,6 +35,7 @@ export default {
       padding: 70px 20px 30px 20px;
     }
     .intro{
+      pointer-events: none;
       position: absolute;
       top: 0;
       left: 0;

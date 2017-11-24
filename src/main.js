@@ -3,7 +3,8 @@
 import Vue from 'vue'
 import App from './App'
 import 'lazysizes'
-import AFRAME from 'aframe'
+import 'aframe'
+import './mouse-cursor'
 
 Vue.config.productionTip = false
 
