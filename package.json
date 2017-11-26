@@ -12,6 +12,7 @@
   "dependencies": {
     "aframe": "^0.7.1",
     "lazysizes": "^4.0.1",
+    "lodash.flattendeep": "^4.4.0",
     "udn-newmedia-utils": "^1.0.9",
     "vue": "^2.5.2"
   },

@@ -73,7 +73,7 @@
                begin="show"
                ></a-animation>
       </a-sky>
-      <a-image id="button_1" class="link" position="-5.5 2 -3" src="#button-1" width="1.5" height="1.5" rotation="0 50 0" @click="toStage2">
+      <a-image id="button_1" class="link" position="-5.5 0 -3" src="#button-1" width="1.5" height="1.5" rotation="0 50 0" @click="toStage2">
         <a-animation begin="click" easing="ease-in" attribute="opacity"
             from="1" to="0" dur="700"></a-animation>
         <a-animation begin="mouseenter" easing="ease-in" attribute="scale"
@@ -81,7 +81,7 @@
         <a-animation begin="mouseleave" easing="ease-in" attribute="scale"
             from="1.5 1.5 1.5" to="1 1 1" dur="700"></a-animation>
       </a-image>
-      <a-image id="button_2" class="link" position="-1 2 -5" src="#button-2" width="1.5" height="1.5" rotation="0 10 0" @click="toStage3" material="opacity: 0">
+      <a-image id="button_2" class="link" position="-1 0 -5" src="#button-2" width="1.5" height="1.5" rotation="0 10 0" @click="toStage3" material="opacity: 0">
         <a-animation begin="show" easing="ease-in" attribute="opacity"
             from="0" to="1" dur="700"></a-animation>
         <a-animation begin="click" easing="ease-in" attribute="opacity"
@@ -91,7 +91,7 @@
         <a-animation begin="mouseleave" easing="ease-in" attribute="scale"
             from="1.5 1.5 1.5" to="1 1 1" dur="700"></a-animation>
       </a-image>
-      <a-image id="button_3" class="link" position="-4 1 -5" src="#button-3" width="1.5" height="1.5" rotation="0 60 0" @click="toYoutube" material="opacity: 0">
+      <a-image id="button_3" class="link" position="-4 0 -5" src="#button-3" width="1.5" height="1.5" rotation="0 60 0" @click="toYoutube" material="opacity: 0">
         <a-animation begin="show" easing="ease-in" attribute="opacity"
             from="0" to="1" dur="700"></a-animation>
         <a-animation begin="mouseenter" easing="ease-in" attribute="scale"
@@ -99,9 +99,17 @@
         <a-animation begin="mouseleave" easing="ease-in" attribute="scale"
             from="1.5 1.5 1.5" to="1 1 1" dur="700"></a-animation>
       </a-image>
-      <a-entity id="camera-rotation" rotation="0 80 0">
-        <a-camera look-controls mouse-cursor>
-            <a-cursor id="cursor" geometry="primitive: ring; radiusInner: 0.03; radiusOuter: 0.04" material="color: red">
+      <a-entity id="camera-rotation" rotation="0 0 0">
+        <a-camera orbit-controls="
+              autoRotate: false;
+              target: #image-360;
+              enableDamping: true;
+              dampingFactor: 0.125;
+              rotateSpeed:0.25;
+              minDistance:3;
+              maxDistance:100;
+              " mouse-cursor position="2.91 -0.36 0.63">
+            <a-cursor id="cursor" cursor="fuse: false" geometry="primitive: ring; radiusInner: 0.03; radiusOuter: 0.04" material="color: red">
               <a-animation begin="click" easing="ease-in" attribute="scale"
                            fill="backwards" from="0.1 0.1 0.1" to="1 1 1" dur="150"></a-animation>
               <a-animation begin="cursor-fusing" easing="ease-in" attribute="scale"
@@ -246,7 +254,9 @@ export default {
 </script>
 
 <style>
-
+  a-box{
+    pointer-events: none;
+  }
   #app{
     height: 100%;
   }
