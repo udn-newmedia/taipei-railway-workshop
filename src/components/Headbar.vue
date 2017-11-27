@@ -6,6 +6,9 @@
         <div id="hbutton" class="squre" @click="handleClick">
             <img :src="icon">
         </div>
+        <div id="youbutton" @click="toYoutube">
+            <span><i class="fa fa-youtube-play"></i></span>觀看影片
+        </div>
     </div>
 </template>
 
@@ -25,6 +28,9 @@ export default {
         }
     },
     methods: {
+        toYoutube: function(){
+            window.open('https://www.youtube.com/watch?v=V4LkXWk-J18&feature=youtu.be')
+        },
         handleClick: function(){
             if(this.icon == fbicon){
                 this.icon = home
@@ -72,6 +78,20 @@ export default {
         padding: 0 5px;
         position: absolute;
     }
+    #youbutton{
+        position: absolute;
+        z-index: 99999;
+        height: 46px;
+        right: 51px;
+        color: #FFFFFF;
+        line-height: 46px;
+        font-size: 20px;
+    }
+    #youbutton .fa-youtube-play{
+        font-size: 23px;
+        margin-right: 7px;
+        color: red;
+    }
     .squre img{
         width: 100%;
         margin-top: 5px;
@@ -84,7 +104,6 @@ export default {
         #icon {
             height: 46px;
             line-height: 46px;
-            text-align: center;
             width: 100%;
         }
         .hbutton {

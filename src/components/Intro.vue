@@ -78,6 +78,10 @@ export default {
         .content{
             padding: 64px 100px;
         }
+        .intro{
+            top: 10%;
+            left: 5%;
+        }
         h2{
             font-size: 30px;
         }
@@ -92,6 +96,10 @@ export default {
         }
         .content{
             padding: 100px 0px;
+        }
+        .intro{
+            top: 10%;
+            left: 5%;
         }
         p>br{
             line-height: 50px;

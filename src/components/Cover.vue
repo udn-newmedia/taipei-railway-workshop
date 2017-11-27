@@ -27,6 +27,14 @@ export default {
         top: 0;
         left: 0;
     }
+    .sub-title{
+        font-size: 24px;
+        color: #FFFFFF;
+        line-height: 1.1;
+        letter-spacing: -1px;
+        text-shadow: 0 0px 18px rgba(48,48,48,1);
+        margin-top: 10px;
+    }
     #bg-contain{
         transition: opacity 0.7s ease;
         overflow: hidden;

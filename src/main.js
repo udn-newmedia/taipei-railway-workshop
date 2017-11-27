@@ -5,7 +5,7 @@ import App from './App'
 import 'lazysizes'
 import 'aframe'
 import './mouse-cursor'
-import './orbit-controls'
+import './looks'
 
 Vue.config.productionTip = false
 

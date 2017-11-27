@@ -1,12 +1,16 @@
 <template>
 	<div id="app">
     <Headbar @stateChange="stateChange"></Headbar>
+    <div id="exitbutton" @click="exitVr" :class="{hidden: !vrMode}">
+      <span><i class="fa fa-close"></i></span>Exit VR
+    </div>
     <div class="plus" @click="expand" :class="{expand: min, show: circleShow}"><img src="./assets/plus_button.png"></div>
-		<Cover :src="bg_m" :style="{opacity: opacity}" :class="{hidden: coverHidden}">
+		<Cover :src="bg_m" :src-web="bg" :style="{opacity: opacity}" :class="{hidden: coverHidden}">
       <div id="cover-contain">
-        <h1>台北機廠大標</h1>
+        <h1>用一生守護乘客</h1>
+        <div class="sub-title">360VR看台北機廠82年歲月</div>
         <p><br/></p>
-        <Share />
+        <Share href="https://udn.com/upf/newmedia/2017_data/taipei-railway-workshop/index.html"/>
       </div>
       <div class="start" @click="start"><img src="./assets/start.png"></div>
       <div class="youtu">直接看影片</div>
@@ -14,14 +18,15 @@
     <ContentContainer id="comment-block" :class="{hidden: commentHidden}">
       <p><br/></p>
       <Editor>
-        <div>文字：洪欣慈、蔡佩蓉</div>
-				<div>視覺設計、影音：張心慈</div>
-				<div>網頁製作：鄭偉廷</div>
-				<div>攝影：陳立凱</div>
+        <div>文字、影片腳本：魏妤庭、洪欣慈</div>
+				<div>攝影：林伯東</div>
+				<div>視覺設計、影片製作：呂紹齊</div>
+				<div>插畫：董十行</div>
+        <div>網頁製作：鄭偉廷</div>
 				<div>2017.10.30</div>
       </Editor>
       <p><br/></p>
-      <Share/>
+      <Share href="https://udn.com/upf/newmedia/2017_data/taipei-railway-workshop/index.html"/>
       <p><br/></p>
       <Relate>
         <a href="https://udn.com/news/story/7314/2283796" target="_blank" slot="relate-1">
@@ -42,38 +47,24 @@
 				</a>
       </Relate>
       <p><br/></p>
-      <FBComment href="https://udn.com/upf/newmedia/2017_data/ideal/index.html" />
+      <FBComment href="https://udn.com/upf/newmedia/2017_data/taipei-railway-workshop/index.html" />
       <p><br/></p>
       <Foot background-color="#FFFFFF"/>
     </ContentContainer>
     <Intro :min="min" :style="{opacity: opacity1}" :text="introText" />
-    <a-scene @touchstart="touchHandle">
+    <a-scene @touchstart="touchHandle" id="scene" @enter-vr="enterVr">
       <a-assets>
-        <img id="360-1-1" src="./assets/360-1-1.jpg"/>
-        <img id="360-2" src="./assets/360-2.jpg"/>
-        <img id="360-3" src="./assets/360-3.jpg"/>
         <img id="button-1" src="./assets/button_1.png">
         <img id="button-2" src="./assets/button_2.png">
         <img id="button-3" src="./assets/360videolink.png">
       </a-assets>
-      <a-sky id="image-360" src="#360-1-1"></a-sky>
-      <a-sky id="image-360-2" src="#360-2" material="opacity: 0">
-        <a-animation attribute="opacity"
-               dur="700"
-               from="0"
-               to="1"
-               begin="show"
-               ></a-animation>
+      <a-sky id="image-360" :src="skySrc">
+        <a-animation begin="click" easing="ease-in" attribute="opacity" @animationend="skyAnimation" 
+            from="1" to="0.8" dur="700"></a-animation>
+        <a-animation begin="show" easing="ease-in" attribute="opacity"
+            from="0.8" to="1" dur="700"></a-animation>
       </a-sky>
-      <a-sky id="image-360-3" src="#360-3" material="opacity: 0">
-        <a-animation attribute="opacity"
-               dur="700"
-               from="0"
-               to="1"
-               begin="show"
-               ></a-animation>
-      </a-sky>
-      <a-image id="button_1" class="link" position="-5.5 0 -3" src="#button-1" width="1.5" height="1.5" rotation="0 50 0" @click="toStage2">
+      <a-image id="button_1" class="link" position="-5.5 0 -4" src="#button-1" width="1.5" height="1.5" rotation="0 50 0" @click="toStage2">
         <a-animation begin="click" easing="ease-in" attribute="opacity"
             from="1" to="0" dur="700"></a-animation>
         <a-animation begin="mouseenter" easing="ease-in" attribute="scale"
@@ -99,16 +90,8 @@
         <a-animation begin="mouseleave" easing="ease-in" attribute="scale"
             from="1.5 1.5 1.5" to="1 1 1" dur="700"></a-animation>
       </a-image>
-      <a-entity id="camera-rotation" rotation="0 0 0">
-        <a-camera orbit-controls="
-              autoRotate: false;
-              target: #image-360;
-              enableDamping: true;
-              dampingFactor: 0.125;
-              rotateSpeed:0.25;
-              minDistance:3;
-              maxDistance:100;
-              " mouse-cursor position="2.91 -0.36 0.63">
+      <a-entity id="camera-rotation" rotation="0 60 0">
+        <a-camera mouse-cursor looks>
             <a-cursor id="cursor" cursor="fuse: false" geometry="primitive: ring; radiusInner: 0.03; radiusOuter: 0.04" material="color: red">
               <a-animation begin="click" easing="ease-in" attribute="scale"
                            fill="backwards" from="0.1 0.1 0.1" to="1 1 1" dur="150"></a-animation>
@@ -135,6 +118,7 @@ import FBComment from '@/components/FBComment'
 import Foot from '@/components/Footer'
 
 import bg_m from '@/assets/bg_m.jpg'
+import bg from '@/assets/bg.jpg'
 
 import relate1 from '@/assets/relate1.jpg'
 import relate2 from '@/assets/relate2.jpg'
@@ -153,9 +137,13 @@ export default {
       coverHidden: false,
       commentHidden: true,
       bg_m: bg_m,
+      bg: bg,
+      vrMode: false,
       min: false,
-      skySrc1: '#360-1-1',
+      skySrc: './static/0.jpg',
+      skySrcCounter: 0,
       stage: 0,
+      stageOffset: 0,
       youtuFlag: false,
       interval: null,
       relate1: relate1,
@@ -164,10 +152,19 @@ export default {
       relate4: relate4
     }
   },
-  mounted: function(){
-    
-  },
   methods: {
+    enterVr: function(){
+      this.vrMode = true
+      this.circleShow = false
+    },
+    exitVr: function(){
+      this.vrMode = false
+      this.circleShow = true
+    },
+    skyAnimation: function(){
+      var temp = document.querySelector('#image-360')
+      temp.emit('show')
+    },
     stateChange: function(){
       if(this.stage == 0){
         this.coverHidden = !this.coverHidden
@@ -184,8 +181,6 @@ export default {
           this.min = true
           this.circleShow = false
         }
-        
-        
       }
     },
     expand: function(){
@@ -202,19 +197,20 @@ export default {
           this.youtuFlag = false
         }, 3000)
       }
-      
     },
     toStage3: function(){
       if(this.stage != 2){
         return
       }
-      var temp = document.querySelector('#image-360-3')
-      temp.emit('show')
-      temp = document.querySelector('#button_3')
+      var temp = document.querySelector('#button_3')
       temp.emit('show')
       temp = document.querySelector('#button_2')
       temp.parentNode.removeChild(temp)
+      var temp = document.querySelector('#image-360')
+      temp.emit('click')
       this.min = false
+      this.skySrc = './static/6.jpg'
+      clearInterval(this.interval)
       this.stage = 3
       this.introText = '歷經遷廠、文化資產保存等爭議，台北機廠在今年7月19日開放民眾登記參觀，預約一開搶就秒殺，現在導覽預約已滿到明年，讓不少想一睹機廠的民眾扼腕。這座已高齡82歲的「火車醫院」魅力何在？聯合報首次以360VR，紀錄台北機廠維修前原貌，跟著台鐵老員工的腳步，聽故事、感受曾經的機廠風華。'
     },
@@ -222,15 +218,15 @@ export default {
       if(this.stage != 1){
         return
       }
-      var temp = document.querySelector('#image-360-2')
-      temp.emit('show')
-      temp = document.querySelector('#button_2')
+      var temp = document.querySelector('#button_2')
       temp.emit('show')
       temp = document.querySelector('#button_1')
       temp.parentNode.removeChild(temp)
-      temp = document.querySelector('#camera-rotation')
-      temp.setAttribute('rotation', '0 30 0')
+      temp = document.querySelector('#image-360')
+      temp.emit('click')
       this.min = false
+      this.skySrc = './static/3.jpg'
+      this.stageOffset += 3
       this.introText = '但在浴池之外，斑駁的圍牆內承載的是台灣近一世紀的鐵路史縮影。從蒸汽火車，到熟悉的普悠瑪號，都是在這裡做定期健檢。許多人一輩子都待在這，用雙手維護著火車上你我的安全。'
       this.stage = 2
     },
@@ -245,6 +241,13 @@ export default {
       setTimeout(() => {
         this.coverHidden = true
       }, 700)
+      this.interval = setInterval(() => {
+        this.skySrcCounter = (this.skySrcCounter + 1) % 3
+        this.skySrc = './static/' +  (this.skySrcCounter + this.stageOffset) + '.jpg'
+        // var temp = document.querySelector('#image-360')
+        // temp.emit('click')
+        console.log(this.skySrc)
+      }, 3000)
     }
   },
   components: {
@@ -254,6 +257,19 @@ export default {
 </script>
 
 <style>
+  #exitbutton{
+    position: absolute;
+    height: 46px;
+    color: #FFFFFF;
+    line-height: 46px;
+    left: 50%;
+    margin-left: -49px;
+    font-size: 24px;
+  }
+
+  #exitbutton .fa-close{
+    margin-right: 5px;
+  }
   a-box{
     pointer-events: none;
   }
@@ -281,7 +297,16 @@ export default {
     width: 100%;
   }
 
+  @keyframes opchange{
+    0% {opacity: 1}
+    50% {opacity: 0.6}
+    100% {opacity: 1}
+  }
+
   .start{
+    animation-name: opchange;
+    animation-duration: 1.2s;
+    animation-iteration-count: infinite;
     position: absolute;
     bottom: 140px;
     left: 50%;
@@ -333,6 +358,12 @@ export default {
   }
   .circle.show{
     opacity: 1;
+  }
+
+  @media screen and (min-width: 1024px){
+    #cover-contain{      
+      left: 10%;
+    }
   }
 
 </style>
