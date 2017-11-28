@@ -54,7 +54,7 @@
       <Foot background-color="#FFFFFF"/>
     </ContentContainer>
     <Intro :min="min" :style="{opacity: opacity1}" :text="introText" />
-    <a-scene @touchstart="touchHandle" @enter-vr="enterVr" @exit-vr="exitVr">
+    <a-scene @touchstart="touchHandle" @mousedown="touchHandle" @enter-vr="enterVr" @exit-vr="exitVr">
       <a-assets>
         <img id="button-1" src="./assets/button_1.png">
         <img id="button-2" src="./assets/button_2.png">
@@ -98,7 +98,7 @@
         <a-animation begin="mouseleave" easing="ease-in" attribute="scale"
             from="1.5 1.5 1.5" to="1 1 1" dur="700"></a-animation>
       </a-image>
-      <a-image id="button_3" class="link" position="-4 0 -5" src="#button-3" width="1.5" height="1.5" rotation="0 60 0" @click="toYoutube" material="opacity: 0">
+      <a-image id="button_3" class="link" position="-4 0 -5" src="#button-3" width="1.5" height="1.5" rotation="0 40 0" @click="toYoutube" material="opacity: 0">
         <a-animation begin="show" easing="ease-in" attribute="opacity"
             from="0" to="1" dur="700"></a-animation>
         <a-animation begin="mouseenter" easing="ease-in" attribute="scale"

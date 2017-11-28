@@ -101,6 +101,9 @@ export default {
             top: 10%;
             left: 5%;
         }
+        .content.intro{
+            padding: 30px;
+        }
         p>br{
             line-height: 50px;
         }
