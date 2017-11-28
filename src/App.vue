@@ -17,13 +17,15 @@
 		</Cover>
     <ContentContainer id="comment-block" :class="{hidden: commentHidden}">
       <p><br/></p>
+      <div><a href="https://www.surveycake.com/s/KpQKN" target="_blank"><img id="question" src="./assets/question.jpg"></a></div>
+      <p><br/></p>
       <Editor>
         <div>文字、影片腳本：魏妤庭、洪欣慈</div>
 				<div>攝影：林伯東</div>
 				<div>視覺設計、影片製作：呂紹齊</div>
 				<div>插畫：董十行</div>
         <div>網頁製作：鄭偉廷</div>
-				<div>2017.10.30</div>
+				<div>2017.12.05</div>
       </Editor>
       <p><br/></p>
       <Share href="https://udn.com/upf/newmedia/2017_data/taipei-railway-workshop/index.html"/>
@@ -52,7 +54,7 @@
       <Foot background-color="#FFFFFF"/>
     </ContentContainer>
     <Intro :min="min" :style="{opacity: opacity1}" :text="introText" />
-    <a-scene @touchstart="touchHandle" id="scene" @enter-vr="enterVr">
+    <a-scene @touchstart="touchHandle" @enter-vr="enterVr">
       <a-assets>
         <img id="button-1" src="./assets/button_1.png">
         <img id="button-2" src="./assets/button_2.png">
@@ -64,7 +66,21 @@
         <a-animation begin="show" easing="ease-in" attribute="opacity"
             from="0.8" to="1" dur="700"></a-animation>
       </a-sky>
-      <a-image id="button_1" class="link" position="-5.5 0 -4" src="#button-1" width="1.5" height="1.5" rotation="0 50 0" @click="toStage2">
+      <a-sky id="image-360-2" src="" material="opacity: 0">
+        <a-animation begin="hide" easing="ease-in" attribute="opacity" 
+            from="1" to="0" dur="700"></a-animation>
+        <a-animation begin="show" easing="ease-in" attribute="opacity"
+            from="0" to="1" dur="700"></a-animation>
+      </a-sky>
+      <a-sky id="image-360-3" src="" material="opacity: 0">
+        <a-animation begin="hide" easing="ease-in" attribute="opacity" 
+            from="1" to="0" dur="700"></a-animation>
+        <a-animation begin="show" easing="ease-in" attribute="opacity"
+            from="0" to="1" dur="700"></a-animation>
+      </a-sky>
+      <a-image id="button_1" class="link" position="-5.5 0 -4" src="#button-1" width="1.5" height="1.5" rotation="0 50 0" @click="toStage2" material="opacity: 0">
+        <a-animation begin="show" easing="ease-in" attribute="opacity"
+            from="0" to="1" dur="700"></a-animation>
         <a-animation begin="click" easing="ease-in" attribute="opacity"
             from="1" to="0" dur="700"></a-animation>
         <a-animation begin="mouseenter" easing="ease-in" attribute="scale"
@@ -94,9 +110,9 @@
         <a-camera mouse-cursor looks>
             <a-cursor id="cursor" cursor="fuse: false" geometry="primitive: ring; radiusInner: 0.03; radiusOuter: 0.04" material="color: red">
               <a-animation begin="click" easing="ease-in" attribute="scale"
-                           fill="backwards" from="0.1 0.1 0.1" to="1 1 1" dur="150"></a-animation>
+                          fill="backwards" from="0.1 0.1 0.1" to="1 1 1" dur="150"></a-animation>
               <a-animation begin="cursor-fusing" easing="ease-in" attribute="scale"
-                           from="1 1 1" to="0.1 0.1 0.1" dur="1500"></a-animation>
+                          from="1 1 1" to="0.1 0.1 0.1" dur="1500"></a-animation>
             </a-cursor>
           </a-camera>
         </a-entity>
@@ -202,15 +218,19 @@ export default {
       if(this.stage != 2){
         return
       }
+      clearInterval(this.interval)
       var temp = document.querySelector('#button_3')
       temp.emit('show')
       temp = document.querySelector('#button_2')
       temp.parentNode.removeChild(temp)
-      var temp = document.querySelector('#image-360')
+      temp = document.querySelector('#image-360')
       temp.emit('click')
+      temp = document.querySelector('#image-360-2')
+      temp.emit('hide')
+      temp = document.querySelector('#image-360-3')
+      temp.emit('hide')
       this.min = false
       this.skySrc = './static/6.jpg'
-      clearInterval(this.interval)
       this.stage = 3
       this.introText = '歷經遷廠、文化資產保存等爭議，台北機廠在今年7月19日開放民眾登記參觀，預約一開搶就秒殺，現在導覽預約已滿到明年，讓不少想一睹機廠的民眾扼腕。這座已高齡82歲的「火車醫院」魅力何在？聯合報首次以360VR，紀錄台北機廠維修前原貌，跟著台鐵老員工的腳步，聽故事、感受曾經的機廠風華。'
     },
@@ -224,6 +244,10 @@ export default {
       temp.parentNode.removeChild(temp)
       temp = document.querySelector('#image-360')
       temp.emit('click')
+      temp = document.querySelector('#image-360-2')
+      temp.setAttribute('src', './static/4.jpg')
+      temp = document.querySelector('#image-360-3')
+      temp.setAttribute('src', './static/5.jpg')
       this.min = false
       this.skySrc = './static/3.jpg'
       this.stageOffset += 3
@@ -238,16 +262,33 @@ export default {
       this.opacity1 = 1
       this.circleShow = true
       this.stage = 1
+      var temp = document.querySelector('#button_1')
+      temp.emit('show')
+      temp = document.querySelector('#image-360-2')
+      temp.setAttribute('src', './static/1.jpg')
+      temp = document.querySelector('#image-360-3')
+      temp.setAttribute('src', './static/2.jpg')
       setTimeout(() => {
         this.coverHidden = true
       }, 700)
       this.interval = setInterval(() => {
         this.skySrcCounter = (this.skySrcCounter + 1) % 3
-        this.skySrc = './static/' +  (this.skySrcCounter + this.stageOffset) + '.jpg'
-        // var temp = document.querySelector('#image-360')
-        // temp.emit('click')
-        console.log(this.skySrc)
-      }, 3000)
+        // this.skySrc = './static/' +  (this.skySrcCounter + this.stageOffset) + '.jpg'
+        if(this.skySrcCounter == 0){
+          var temp = document.querySelector('#image-360-2')
+          temp.emit('hide')
+          temp = document.querySelector('#image-360-3')
+          temp.emit('hide')
+        }
+        else if(this.skySrcCounter == 1){
+          var temp = document.querySelector('#image-360-2')
+          temp.emit('show')
+        }
+        else{
+          var temp = document.querySelector('#image-360-3')
+          temp.emit('show')
+        }
+      }, 1500)
     }
   },
   components: {
@@ -257,6 +298,7 @@ export default {
 </script>
 
 <style>
+  
   #exitbutton{
     position: absolute;
     height: 46px;
@@ -265,6 +307,7 @@ export default {
     left: 50%;
     margin-left: -49px;
     font-size: 24px;
+    z-index: 99999;
   }
 
   #exitbutton .fa-close{
@@ -358,6 +401,12 @@ export default {
   }
   .circle.show{
     opacity: 1;
+  }
+
+  @media screen and (max-width: 767px){
+    #question{
+      width: 75%;
+    }
   }
 
   @media screen and (min-width: 1024px){
