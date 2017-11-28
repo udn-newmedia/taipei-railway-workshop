@@ -13,7 +13,7 @@
         <Share href="https://udn.com/upf/newmedia/2017_data/taipei-railway-workshop/index.html"/>
       </div>
       <div class="start" @click="start"><img src="./assets/start.png"></div>
-      <div class="youtu">直接看影片</div>
+      <div class="youtu"><a href="https://www.youtube.com/watch?v=V4LkXWk-J18&feature=youtu.be" target="_blank">直接看影片</a></div>
 		</Cover>
     <ContentContainer id="comment-block" :class="{hidden: commentHidden}">
       <p><br/></p>
@@ -54,7 +54,7 @@
       <Foot background-color="#FFFFFF"/>
     </ContentContainer>
     <Intro :min="min" :style="{opacity: opacity1}" :text="introText" />
-    <a-scene @touchstart="touchHandle" @enter-vr="enterVr">
+    <a-scene @touchstart="touchHandle" @enter-vr="enterVr" @exit-vr="exitVr">
       <a-assets>
         <img id="button-1" src="./assets/button_1.png">
         <img id="button-2" src="./assets/button_2.png">
@@ -123,6 +123,9 @@
 </template>
 
 <script>
+
+import Utils from 'udn-newmedia-utils'
+
 import Headbar from '@/components/Headbar'
 import Cover from '@/components/Cover'
 import ContentContainer from '@/components/Content'
@@ -172,8 +175,22 @@ export default {
     enterVr: function(){
       this.vrMode = true
       this.circleShow = false
+      ga("send", {
+        "hitType": "event",
+        "eventCategory": "進入VR模式",
+        "eventAction": "click",
+        "eventLabel": "[" + Utils.detectPlatform() + "] [" + document.querySelector('title').innerHTML + "] [進入VR模式]"
+      });
     },
     exitVr: function(){
+      ga("send", {
+        "hitType": "event",
+        "eventCategory": "進入VR模式",
+        "eventAction": "click",
+        "eventLabel": "[" + Utils.detectPlatform() + "] [" + document.querySelector('title').innerHTML + "] [離開VR模式]"
+      });
+      document.querySelector('a-scene').exitVR();
+      window.location.href = "./index.html"
       this.vrMode = false
       this.circleShow = true
     },
@@ -185,9 +202,21 @@ export default {
       if(this.stage == 0){
         this.coverHidden = !this.coverHidden
         this.commentHidden = !this.commentHidden
+        ga("send", {
+          "hitType": "event",
+          "eventCategory": "留言icon點擊",
+          "eventAction": "click",
+          "eventLabel": "[" + Utils.detectPlatform() + "] [" + document.querySelector('title').innerHTML + "] [留言icon點擊]"
+        });
       }
       else{
         this.coverHidden = true
+        ga("send", {
+          "hitType": "event",
+          "eventCategory": "返回icon點擊",
+          "eventAction": "click",
+          "eventLabel": "[" + Utils.detectPlatform() + "] [" + document.querySelector('title').innerHTML + "] [返回icon點擊]"
+        });
         if(this.commentHidden == false){
           this.commentHidden = true
           this.circleShow = true
@@ -201,13 +230,25 @@ export default {
     },
     expand: function(){
       this.min = false
+      ga("send", {
+        "hitType": "event",
+        "eventCategory": "expand 點擊",
+        "eventAction": "click",
+        "eventLabel": "[" + Utils.detectPlatform() + "] [" + document.querySelector('title').innerHTML + "] [expand 點擊]"
+      });
     },
     toYoutube: function(){
       if(this.stage != 3){
         return
       }
+      ga("send", {
+        "hitType": "event",
+        "eventCategory": "Head youtube 點擊",
+        "eventAction": "click",
+        "eventLabel": "[" + Utils.detectPlatform() + "] [" + document.querySelector('title').innerHTML + "] [stage3 youtube 點擊]"
+      });
       if(this.youtuFlag == false){
-        window.open('https://youtube.com.tw')
+        window.open('https://www.youtube.com/watch?v=V4LkXWk-J18&feature=youtu.be')
         this.youtuFlag = true
         setTimeout(() => {
           this.youtuFlag = false
@@ -218,6 +259,12 @@ export default {
       if(this.stage != 2){
         return
       }
+      ga("send", {
+        "hitType": "event",
+        "eventCategory": "進入VR場景 3",
+        "eventAction": "click",
+        "eventLabel": "[" + Utils.detectPlatform() + "] [" + document.querySelector('title').innerHTML + "] [Stage 3]"
+      });
       clearInterval(this.interval)
       var temp = document.querySelector('#button_3')
       temp.emit('show')
@@ -238,6 +285,12 @@ export default {
       if(this.stage != 1){
         return
       }
+      ga("send", {
+        "hitType": "event",
+        "eventCategory": "進入VR場景 2",
+        "eventAction": "click",
+        "eventLabel": "[" + Utils.detectPlatform() + "] [" + document.querySelector('title').innerHTML + "] [Stage 2]"
+      });
       var temp = document.querySelector('#button_2')
       temp.emit('show')
       temp = document.querySelector('#button_1')
@@ -258,6 +311,12 @@ export default {
       this.min = true
     },
     start: function(){
+      ga("send", {
+        "hitType": "event",
+        "eventCategory": "進入VR場景 1",
+        "eventAction": "click",
+        "eventLabel": "[" + Utils.detectPlatform() + "] [" + document.querySelector('title').innerHTML + "] [Stage 1]"
+      });
       this.opacity = 0
       this.opacity1 = 1
       this.circleShow = true
@@ -355,6 +414,11 @@ export default {
     left: 50%;
     margin-left: -65px;
     width: 130px;
+  }
+
+  .youtu a{
+    color: #FFFFFF;
+    text-decoration: none;
   }
 
   .youtu{

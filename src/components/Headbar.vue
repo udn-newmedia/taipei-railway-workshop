@@ -29,6 +29,12 @@ export default {
     },
     methods: {
         toYoutube: function(){
+            ga("send", {
+                "hitType": "event",
+                "eventCategory": "Head youtube 點擊",
+                "eventAction": "click",
+                "eventLabel": "[" + Utils.detectPlatform() + "] [" + document.querySelector('title').innerHTML + "] [Head youtube 點擊]"
+            });
             window.open('https://www.youtube.com/watch?v=V4LkXWk-J18&feature=youtu.be')
         },
         handleClick: function(){

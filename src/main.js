@@ -7,6 +7,8 @@ import 'aframe'
 import './mouse-cursor'
 import './looks'
 
+import Utils from 'udn-newmedia-utils'
+
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
@@ -14,4 +16,14 @@ new Vue({
   el: '#app',
   template: '<App/>',
   components: { App }
+})
+
+$(document).ready(function(){
+  fbq('track', 'ViewContent');
+  ga("send", {
+    "hitType": "event",
+    "eventCategory": "超連結點擊",
+    "eventAction": "click",
+    "eventLabel": "[" + Utils.detectPlatform() + "] [" + document.querySelector('title').innerHTML + "] [" + $(this).attr('href') + "] [" + $(this).parent().attr('class') + "]"
+  });
 })
