@@ -144,6 +144,8 @@ import relate2 from '@/assets/relate2.jpg'
 import relate3 from '@/assets/relate3.jpg'
 import relate4 from '@/assets/relate4.jpg'
 
+var track = 0
+
 export default {
   name: 'app',
   data: function(){
@@ -170,6 +172,27 @@ export default {
       relate3: relate3,
       relate4: relate4
     }
+  },
+  mounted: function(){
+    var d = new Date()
+    var year = d.getFullYear()
+    var month = d.getMonth() + 1
+    var day = d.getDate()
+    var hour = d.getHours()
+    var minute = d.getMinutes()
+    var second = d.getSeconds()
+    var tempUser = 'udn-' + year + '-' + month + '-' + day + '-' +  hour + '-' + minute + '-' + second + '-' + Math.floor(Math.random()*100000)
+    setInterval(function(){
+      var temp = document.querySelector('a-camera')
+      console.log(temp.getAttribute('rotation'), track, tempUser)
+      track += 1
+      ga("send", {
+        "hitType": "event",
+        "eventCategory": "VR 追蹤",
+        "eventAction": "click",
+        "eventLabel": "[" + Utils.detectPlatform() + "] [" + document.querySelector('title').innerHTML + "] [VR 追蹤] [" + tempUser + "] [" + track + "]"
+      });
+    }, 1000)
   },
   methods: {
     enterVr: function(){
