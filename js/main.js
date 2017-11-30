@@ -100,7 +100,7 @@ function detectIE() {
   
     // other browser
     return false;
-  }
+}
 
 $(document).ready(function(){
 

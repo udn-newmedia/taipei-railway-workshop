@@ -494,6 +494,7 @@ export default {
     width: 160px;
     left: 50%;
     margin-left: -80px;
+    pointer-events: none;
   }
   .circle img{
     width: 100%;
