@@ -13,7 +13,7 @@
         <Share href="https://udn.com/upf/newmedia/2017_data/taipei-railway-workshop/index.html"/>
       </div>
       <div class="start" @click="start"><img src="./assets/start.png"></div>
-      <div class="youtu"><a href="https://www.youtube.com/watch?v=V4LkXWk-J18&feature=youtu.be" target="_blank">直接看影片</a></div>
+      <!-- <div class="youtu"><a href="https://www.youtube.com/watch?v=V4LkXWk-J18&feature=youtu.be" target="_blank">直接看影片</a></div> -->
 		</Cover>
     <ContentContainer id="comment-block" :class="{hidden: commentHidden}">
       <p><br/></p>
@@ -54,7 +54,7 @@
       <Foot background-color="#FFFFFF"/>
     </ContentContainer>
     <Intro :min="min" :style="{opacity: opacity1}" :text="introText" />
-    <a-scene @touchstart="touchHandle" @mousedown="touchHandle" @enter-vr="enterVr" @exit-vr="exitVr">
+    <a-scene @touchstart="touchHandle" @enter-vr="enterVr" @exit-vr="exitVr">
       <a-assets>
         <img id="button-1" src="./assets/button_1.png">
         <img id="button-2" src="./assets/button_2.png">
@@ -182,6 +182,15 @@ export default {
     var minute = d.getMinutes()
     var second = d.getSeconds()
     var tempUser = 'udn-' + year + '-' + month + '-' + day + '-' +  hour + '-' + minute + '-' + second + '-' + Math.floor(Math.random()*100000)
+    window.addEventListener('orientationchange', function(){
+      console.log(123)
+      console.log(document.querySelector('a-scene').object3D)
+      // setTimeout(function(){
+      //   $('window').trigger('resize')
+      //   // $('canvas').css('width', window.innerWidth)
+      //   // $('canvas').css('height', window.innerHeight)
+      // }, 300)
+    })
     setInterval(function(){
       var temp = document.querySelector('a-camera')
       console.log(temp.getAttribute('rotation'), track, tempUser)
@@ -329,6 +338,7 @@ export default {
       this.stageOffset += 3
       this.introText = '但在浴池之外，斑駁的圍牆內承載的是台灣近一世紀的鐵路史縮影。從蒸汽火車，到熟悉的普悠瑪號，都是在這裡做定期健檢。許多人一輩子都待在這，用雙手維護著火車上你我的安全。'
       this.stage = 2
+      this.skySrcCounter = 0
     },
     touchHandle: function(){
       this.min = true
@@ -354,6 +364,9 @@ export default {
         this.coverHidden = true
       }, 700)
       this.interval = setInterval(() => {
+        if(this.skySrcCounter == 2){
+          return
+        }
         this.skySrcCounter = (this.skySrcCounter + 1) % 3
         // this.skySrc = './static/' +  (this.skySrcCounter + this.stageOffset) + '.jpg'
         if(this.skySrcCounter == 0){
@@ -380,7 +393,6 @@ export default {
 </script>
 
 <style>
-  
   #exitbutton{
     position: absolute;
     height: 46px;
@@ -493,6 +505,13 @@ export default {
   @media screen and (max-width: 767px){
     #question{
       width: 75%;
+    }
+  }
+
+  @media screen and (min-width: 768px) and (max-width: 1023px){
+    .start{
+      width: 200px;
+      margin-left: -100px;
     }
   }
 

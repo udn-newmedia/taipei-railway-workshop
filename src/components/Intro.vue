@@ -73,10 +73,10 @@ export default {
     }
     @media screen and (min-width: 768px) and (max-width: 1024px){
         .container{
-            width: 100%;
+            width: 90%;
         }
-        .content{
-            padding: 64px 100px;
+        .content.intro{
+            padding: 30px;
         }
         .intro{
             top: 10%;

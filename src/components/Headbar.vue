@@ -83,6 +83,7 @@ export default {
         right: 0;
         padding: 0 5px;
         position: absolute;
+        cursor: pointer;
     }
     #youbutton{
         position: absolute;
@@ -92,6 +93,7 @@ export default {
         color: #FFFFFF;
         line-height: 46px;
         font-size: 20px;
+        cursor: pointer;
     }
     #youbutton .fa-youtube-play{
         font-size: 23px;
