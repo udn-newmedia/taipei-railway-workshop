@@ -19,11 +19,15 @@ new Vue({
 })
 
 $(document).ready(function(){
-  fbq('track', 'ViewContent');
-  ga("send", {
-    "hitType": "event",
-    "eventCategory": "超連結點擊",
-    "eventAction": "click",
-    "eventLabel": "[" + Utils.detectPlatform() + "] [" + document.querySelector('title').innerHTML + "] [" + $(this).attr('href') + "] [" + $(this).parent().attr('class') + "]"
-  });
+
+  $('a').click(function(){
+    fbq('track', 'ViewContent');
+    ga("send", {
+      "hitType": "event",
+      "eventCategory": "超連結點擊",
+      "eventAction": "click",
+      "eventLabel": "[" + Utils.detectPlatform() + "] [" + document.querySelector('title').innerHTML + "] [" + $(this).attr('href') + "] [" + $(this).parent().attr('class') + "]"
+    });
+  })
+  
 })
