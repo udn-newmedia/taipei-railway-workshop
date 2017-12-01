@@ -182,15 +182,6 @@ export default {
     var minute = d.getMinutes()
     var second = d.getSeconds()
     var tempUser = 'udn-' + year + '-' + month + '-' + day + '-' +  hour + '-' + minute + '-' + second + '-' + Math.floor(Math.random()*100000)
-    window.addEventListener('orientationchange', function(){
-      console.log(123)
-      console.log(document.querySelector('a-scene').object3D)
-      // setTimeout(function(){
-      //   $('window').trigger('resize')
-      //   // $('canvas').css('width', window.innerWidth)
-      //   // $('canvas').css('height', window.innerHeight)
-      // }, 300)
-    })
     setInterval(function(){
       var temp = document.querySelector('a-camera')
       console.log(temp.getAttribute('rotation'), track, tempUser)

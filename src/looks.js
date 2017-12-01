@@ -13,7 +13,7 @@ AFRAME.registerComponent('looks', {
     enabled: {default: true},
     touchEnabled: {default: true},
     hmdEnabled: {default: true},
-    reverseMouseDrag: {default: false},
+    reverseMouseDrag: {default: true},
     standing: {default: true}
   },
 

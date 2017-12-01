@@ -366,7 +366,10 @@ AFRAME.registerComponent('mouse-cursor', {
 	 * @private
 	 */
 	_getCanvasPos () {
-		this._canvasSize = this.el.sceneEl.canvas.getBoundingClientRect() // update _canvas in case scene is embedded
+		var self = this
+		setTimeout(function(){
+			self._canvasSize = self.el.sceneEl.canvas.getBoundingClientRect() // update _canvas in case scene is embedded
+		}, 400)
 	},
 
 	/**
