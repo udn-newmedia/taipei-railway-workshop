@@ -54,6 +54,7 @@ export default {
     @media screen and (max-width: 767px){
         h1{
             font-size: 40px;
+            text-align: left;
         }
     }
     @media screen and (min-width: 768px) and (max-width: 1024px){

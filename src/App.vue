@@ -5,10 +5,11 @@
       <span><i class="fa fa-close"></i></span>Exit VR
     </div>
     <div class="plus" @click="expand" :class="{expand: min, show: circleShow}"><img src="./assets/plus_button.png"></div>
+    <div id="exp" :class="{open: circleShow & min}">紅圈對準或點擊黑色按鈕進入下一幕</div>
 		<Cover :src="bg_m" :src-web="bg" :style="{opacity: opacity}" :class="{hidden: coverHidden}">
       <div id="cover-contain">
-        <h1>用一生守護乘客</h1>
-        <div class="sub-title">360VR看台北機廠82年歲月</div>
+        <h1>遷不走的火車職人魂</h1>
+        <div class="sub-title">360VR看82歲的台北機廠</div>
         <p><br/></p>
         <Share href="https://udn.com/upf/newmedia/2017_data/taipei-railway-workshop/index.html"/>
       </div>
@@ -108,11 +109,11 @@
       </a-image>
       <a-entity id="camera-rotation" rotation="0 60 0">
         <a-camera mouse-cursor looks>
-            <a-cursor id="cursor" cursor="fuse: false" geometry="primitive: ring; radiusInner: 0.03; radiusOuter: 0.04" material="color: red">
+            <a-cursor id="cursor" cursor="fuse: true" geometry="primitive: ring; radiusInner: 0.03; radiusOuter: 0.04" material="color: red">
               <a-animation begin="click" easing="ease-in" attribute="scale"
                           fill="backwards" from="0.1 0.1 0.1" to="1 1 1" dur="150"></a-animation>
               <a-animation begin="cursor-fusing" easing="ease-in" attribute="scale"
-                          from="1 1 1" to="0.1 0.1 0.1" dur="1500"></a-animation>
+                          from="1 1 1" to="0.1 0.1 0.1" dur="1500" fill="backwards"></a-animation>
             </a-cursor>
           </a-camera>
         </a-entity>
@@ -150,7 +151,7 @@ export default {
   name: 'app',
   data: function(){
     return {
-      introText: '上班時間的市民大道車水馬龍，喇叭聲與人聲不絕於耳，有個地方在熱鬧中顯得寂靜低調，紅紅的四個大字「台北機廠」逐漸被樹叢淹沒。這裡臉書打卡率最高的，是這個宛如「羅馬浴場」的員工浴室。',
+      introText: '位於台北市市民大道、82歲的台北機廠，今年7月19日首度打開大門，開放民眾參觀，其中臉書打卡率最高的，是被喻為台灣版「羅馬浴場」的台鐵員工浴室。《聯合報》結合老照片、插畫，透過360影像帶大家親臨「火車醫院」昔日風華。',
       opacity: 1,
       opacity1: 0,
       circleShow: false,
@@ -182,7 +183,7 @@ export default {
     var minute = d.getMinutes()
     var second = d.getSeconds()
     var tempUser = 'udn-' + year + '-' + month + '-' + day + '-' +  hour + '-' + minute + '-' + second + '-' + Math.floor(Math.random()*100000)
-    setInterval(function(){
+    setInterval(() => {
       var temp = document.querySelector('a-camera')
       console.log(temp.getAttribute('rotation'), track, tempUser)
       track += 1
@@ -190,7 +191,7 @@ export default {
         "hitType": "event",
         "eventCategory": "VR 追蹤",
         "eventAction": "click",
-        "eventLabel": "[" + Utils.detectPlatform() + "] [" + document.querySelector('title').innerHTML + "] [VR 追蹤] [" + tempUser + "] [" + track + "]"
+        "eventLabel": "[" + Utils.detectPlatform() + "] [" + document.querySelector('title').innerHTML + "] [VR 追蹤] [" + tempUser + "] [" + track + "] [" + this.stage + "]" 
       });
     }, 1000)
   },
@@ -302,7 +303,7 @@ export default {
       this.min = false
       this.skySrc = './static/6.jpg'
       this.stage = 3
-      this.introText = '歷經遷廠、文化資產保存等爭議，台北機廠在今年7月19日開放民眾登記參觀，預約一開搶就秒殺，現在導覽預約已滿到明年，讓不少想一睹機廠的民眾扼腕。這座已高齡82歲的「火車醫院」魅力何在？聯合報首次以360VR，紀錄台北機廠維修前原貌，跟著台鐵老員工的腳步，聽故事、感受曾經的機廠風華。'
+      this.introText = '截至11月底，已有超過2500人次參觀台北機廠，現在導覽預約已滿到明年。參觀人潮愈多，老員工感慨愈深，他們期待民眾除了看到懷舊空間，更能感受火車職人的「北廠精神」。現在，跟著老員工腳步探索這裡，聽機廠的故事。'
     },
     toStage2: function(){
       if(this.stage != 1){
@@ -327,7 +328,7 @@ export default {
       this.min = false
       this.skySrc = './static/3.jpg'
       this.stageOffset += 3
-      this.introText = '但在浴池之外，斑駁的圍牆內承載的是台灣近一世紀的鐵路史縮影。從蒸汽火車，到熟悉的普悠瑪號，都是在這裡做定期健檢。許多人一輩子都待在這，用雙手維護著火車上你我的安全。'
+      this.introText = '這座高齡82歲的「火車醫院」，過去擔負檢修全台火車健康的責任。從最早期的蒸汽火車到花東之王普悠瑪號，都是在這裡定期健檢。許多員工一輩子待在這，用雙手維護火車上你我的安全。'
       this.stage = 2
       this.skySrcCounter = 0
     },
@@ -419,6 +420,7 @@ export default {
     position: absolute;
     left: 20px;
     top: 20%;
+    width: 80%;
   }
 
   .start img{
@@ -491,6 +493,27 @@ export default {
     width: 100%;
   }
   .circle.show{
+    opacity: 1;
+  }
+  #exp{
+    position: absolute;
+    width: 0;
+    opacity: 0;
+    overflow: hidden;
+    height: 35px;
+    padding: 0px 10px;
+    line-height: 35px;
+    top: 63px;
+    left: 65px;
+    z-index: 10;
+    color: #FFFFFF;
+    background-color: rgba(0, 0, 0, 0.8);
+    border-radius: 25px;
+    transition: all 0.7s ease;
+  }
+
+  #exp.open{
+    width: 276px;
     opacity: 1;
   }
 
