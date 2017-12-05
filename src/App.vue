@@ -5,7 +5,7 @@
       <span><i class="fa fa-close"></i></span>Exit VR
     </div>
     <div class="plus" @click="expand" :class="{expand: min, show: circleShow}"><img src="./assets/plus_button.png"></div>
-    <div id="exp" :class="{open: circleShow & min}">紅圈對準或點擊黑色按鈕進入下一幕</div>
+    <div id="exp" :class="{open: (min || isPC) && circleShow}">點擊圓形按鈕進入下一幕</div>
 		<Cover :src="bg_m" :src-web="bg" :style="{opacity: opacity}" :class="{hidden: coverHidden}">
       <div id="cover-contain">
         <h1>遷不走的火車職人魂</h1>
@@ -160,6 +160,7 @@ export default {
       commentHidden: true,
       bg_m: bg_m,
       bg: bg,
+      isPC: !Utils.detectMob(),
       vrMode: false,
       min: false,
       skySrc: './static/0.jpg',
@@ -271,13 +272,9 @@ export default {
         "eventAction": "click",
         "eventLabel": "[" + Utils.detectPlatform() + "] [" + document.querySelector('title').innerHTML + "] [stage3 youtube 點擊]"
       });
-      if(this.youtuFlag == false){
-        window.open('https://www.youtube.com/watch?v=V4LkXWk-J18&feature=youtu.be')
-        this.youtuFlag = true
-        setTimeout(() => {
-          this.youtuFlag = false
-        }, 3000)
-      }
+      
+      window.location.href = 'https://www.youtube.com/watch?v=V4LkXWk-J18&feature=youtu.be'
+      
     },
     toStage3: function(){
       if(this.stage != 2){
@@ -513,7 +510,7 @@ export default {
   }
 
   #exp.open{
-    width: 276px;
+    width: 200px;
     opacity: 1;
   }
 
@@ -533,6 +530,12 @@ export default {
   @media screen and (min-width: 1024px){
     #cover-contain{      
       left: 10%;
+    }
+    #exp{
+      top: auto;
+      bottom: 25px;
+      left: 50%;
+      margin-left: -138px;
     }
   }
 

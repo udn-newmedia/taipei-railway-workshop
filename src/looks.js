@@ -200,7 +200,12 @@ AFRAME.registerComponent('looks', {
       rotation.y = radToDeg(hmdEuler.y);
       rotation.z = radToDeg(hmdEuler.z);
     }
-
+    if(rotation.x > 90){
+      rotation.x = 90
+    }
+    if(rotation.x < -90){
+      rotation.x = -90
+    }
     this.el.setAttribute('rotation', rotation);
   },
 
