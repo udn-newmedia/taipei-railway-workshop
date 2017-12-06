@@ -35,7 +35,7 @@ export default {
                 "eventAction": "click",
                 "eventLabel": "[" + Utils.detectPlatform() + "] [" + document.querySelector('title').innerHTML + "] [Head youtube 點擊]"
             });
-            window.open('https://www.youtube.com/watch?v=V4LkXWk-J18&feature=youtu.be')
+            window.open('https://www.youtube.com/watch?v=U7w49vNCF7E&feature=youtu.be')
         },
         handleClick: function(){
             if(this.icon == fbicon){

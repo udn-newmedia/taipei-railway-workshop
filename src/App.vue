@@ -273,7 +273,7 @@ export default {
         "eventLabel": "[" + Utils.detectPlatform() + "] [" + document.querySelector('title').innerHTML + "] [stage3 youtube 點擊]"
       });
       
-      window.location.href = 'https://www.youtube.com/watch?v=V4LkXWk-J18&feature=youtu.be'
+      window.location.href = 'https://www.youtube.com/watch?v=U7w49vNCF7E&feature=youtu.be'
       
     },
     toStage3: function(){
