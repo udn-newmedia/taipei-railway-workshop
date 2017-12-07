@@ -172,6 +172,14 @@ AFRAME.registerComponent('looks', {
     var sceneEl = this.el.sceneEl;
     var rotation = this.rotation;
 
+    if(this.pitchObject.rotation.x > 1.5){
+      this.pitchObject.rotation.x = 1.5
+    }
+
+    if(this.pitchObject.rotation.x < -1.5){
+      this.pitchObject.rotation.x = -1.5
+    }
+
     // Calculate HMD quaternion.
     hmdQuaternion = hmdQuaternion.copy(this.dolly.quaternion);
     hmdEuler.setFromQuaternion(hmdQuaternion, 'YXZ');
@@ -181,6 +189,7 @@ AFRAME.registerComponent('looks', {
       rotation.x = radToDeg(hmdEuler.x) + radToDeg(pitchObject.rotation.x);
       rotation.y = radToDeg(hmdEuler.y) + radToDeg(yawObject.rotation.y);
       rotation.z = radToDeg(hmdEuler.z);
+      
     } else if (!sceneEl.is('vr-mode') || isNullVector(hmdEuler) || !this.data.hmdEnabled) {
       // Mouse drag if WebVR not active (not connected, no incoming sensor data).
       currentRotation = this.el.getAttribute('rotation');

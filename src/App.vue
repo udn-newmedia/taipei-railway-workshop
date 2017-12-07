@@ -535,7 +535,7 @@ export default {
       top: auto;
       bottom: 25px;
       left: 50%;
-      margin-left: -138px;
+      margin-left: -100px;
     }
   }
 
